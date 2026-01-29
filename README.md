@@ -1,5 +1,4 @@
 # Aplicando Embeddings y PCA en la comparación de textos.
-## Vamos a observar las diferencias en dos modelos de ML
 
 Los embeddings y la PCA son herramientas fundamentales en el procesamiento del lenguaje natural y la inteligencia artificial, permitiendo a los modelos de aprendizaje automático entender y procesar el lenguaje humano de manera más efectiva.
 
