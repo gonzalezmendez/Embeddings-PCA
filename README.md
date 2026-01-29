@@ -29,12 +29,13 @@ Estas descripciones se transforman en embeddings y posteriormente se analizan me
 |[Codigo modelo all-MiniLM-L6-v2](https://github.com/gonzalezmendez/NLP/blob/txt/L6.txt)|[Imagen del codigo](https://github.com/gonzalezmendez/NLP/blob/img/L6.png)|
 |:--|--:|
 
-![Texto alternativo](https://github.com/gonzalezmendez/NLP/blob/img/L6B.png)
+![L6](https://github.com/gonzalezmendez/NLP/blob/img/L6B.png)
 ---
 ### Modelo paraphrase-multilingual-MiniLM-L12-v2
   * Es más robusto. Al permitir que los vectores crezcan en magnitud, está capturando una dimensionalidad más rica del texto complejo.
   * Refleja mejor las distancias reales entre conceptos físicos distintos (no es lo mismo la inercia que la gravedad).
 
-[Codigo completo usando el modelo paraphrase-multilingual-MiniLM-L12-v2](https://github.com/gonzalezmendez/Embeddings-PCA/blob/img/L12.png))
-![Texto alternativo](https://github.com/gonzalezmendez/Embeddings-PCA/blob/img/L12B.png)
-https://github.com/gonzalezmendez/NLP/blob/txt/L12.txt
+|[Codigo modelo paraphrase-multilingual-MiniLM-L12-v2](https://github.com/gonzalezmendez/NLP/blob/txt/L12.txt)|[Imagen del codigo](https://github.com/gonzalezmendez/NLP/blob/img/L12.png)|
+|:--|--:|
+
+![L12](https://github.com/gonzalezmendez/NLP/blob/img/L12B.png)
