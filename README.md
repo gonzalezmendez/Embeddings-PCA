@@ -1,3 +1,4 @@
+# NLP – Natural Language Processing (procesamiento de lenguaje natural)
 # Aplicando Embeddings y PCA en la comparación de textos.
 
 Los embeddings y la PCA son herramientas fundamentales en el procesamiento del lenguaje natural y la inteligencia artificial, permitiendo a los modelos de aprendizaje automático entender y procesar el lenguaje humano de manera más efectiva.
