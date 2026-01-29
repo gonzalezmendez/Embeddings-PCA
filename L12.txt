@@ -1,0 +1,86 @@
+from sentence_transformers import SentenceTransformer
+from sklearn.decomposition import PCA
+import pandas as pd
+import numpy as np
+import plotly.express as px
+
+model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
+
+leyes = {
+    "Primera Ley de Newton (Ley de Inercia)" : 
+        "Un objeto en reposo permanecerá en reposo y un objeto en movimiento continuará en movimiento a velocidad constante, 
+        a menos que una fuerza externa actúe sobre él.",
+    "Segunda Ley de Newton (Ley de Fuerza)" : 
+        "La fuerza neta que actúa sobre un objeto es igual a su masa multiplicada por su aceleración (F=ma).Esto significa que
+        la aceleración de un objeto es directamente proporcional a la fuerza aplicada e inversamente proporcional a su masa.",
+    "Tercera Ley de Newton (Ley de Acción y Reacción)" : 
+        "Por cada acción, hay una reacción igual y opuesta. Esto implica que si un objeto ejerce una fuerza sobre otro, el segundo
+        objeto ejercerá una fuerza de igual magnitud pero en dirección opuesta sobre el primero.",
+    "Ley de Conservación de la Energía" : 
+        "La energía no se crea ni se destruye, solo se transforma de una forma a otra. La cantidad total de energía en un sistema
+        cerrado permanece constante.",
+    "Ley de Gravedad":
+        "Dos objetos se atraen entre sí con una fuerza que es directamente proporcional a sus masas e inversamente proporcional al
+        cuadrado de la distancia que los separa.",
+    "Ley de Coulomb" : 
+        "Las cargas eléctricas se atraen o se repelen entre sí con una fuerza que es directamente proporcional al producto de las
+        magnitudes de las cargas e inversamente proporcional al cuadrado de la distancia que las separa.",
+    "Leyes de la Termodinámica" : 
+        "Estas leyes describen cómo la energía se transfiere y se transforma en sistemas físicos. La primera ley establece que la
+        energía total de un sistema cerrado es constante, mientras que la segunda ley introduce el concepto de entropía, indicando
+        que los sistemas tienden al desorden con el tiempo."
+}
+
+textos = list(leyes.values())
+nombres = list(leyes.keys())
+embeddings = model.encode(textos)
+
+pca = PCA(n_components=2)
+embeddings_2d = pca.fit_transform(embeddings)
+
+df = pd.DataFrame(embeddings_2d, columns=['Componente 1', 'Componente 2'])
+df['Nombre de la Ley'] = nombres
+df['Contenido'] = [t[:100] + "..." for t in textos]
+
+print("\n--- COORDENADAS 2D (PCA) ---")
+df_coords = pd.DataFrame({
+    'Ley': nombres,
+    'Eje_X': embeddings_2d[:, 0],
+    'Eje_Y': embeddings_2d[:, 1]
+})
+print(df_coords)
+
+df_coords['Magnitud_Semantica'] = np.linalg.norm(embeddings, axis=1)
+
+print("\n--- VALORES DE CADA LEY ---")
+
+print(df_coords[['Ley', 'Magnitud_Semantica']].sort_values(by='Magnitud_Semantica', ascending=False))
+
+print("\n--- MUESTRA DE VECTORES (Primeros 3 valores de 384) ---")
+for i, nombre in enumerate(nombres):
+    print(f"{nombre}: {embeddings[i][:3]}...")
+
+fig = px.scatter(
+    df, 
+    x='Componente 1', 
+    y='Componente 2', 
+    text='Nombre de la Ley',
+    hover_data=['Contenido'],
+    title="Mapa Semántico de Leyes",
+    color='Nombre de la Ley',
+    template="plotly_white"
+)
+
+fig.update_traces(
+    textposition='top center',
+    marker=dict(size=12, line=dict(width=2, color='DarkSlateGrey'))
+)
+
+fig.update_layout(
+    showlegend=False,
+    height=600,
+    xaxis_title="Similitud Semántica (Eje X)",
+    yaxis_title="Similitud Semántica (Eje Y)"
+)
+
+fig.show()    
